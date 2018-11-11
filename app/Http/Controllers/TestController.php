@@ -75,11 +75,11 @@ class TestController extends Controller
        // $message = "2dai da 14.54--94.14--54.94--18.58--98.18--58.98--38.78-1n 2d.36.32.72 da2n.t5";
         //$message = "2d da 07.76.1n.22.41.1n. la.18.68.19.99.dau,100n.81.dau.100n.dui.400n.t6";
        // $message = "2d . 68 - 14 da3n . 10 - 01 da3n . t7";
-        //$message = "dc.79.dui.200n.2d.72.79.da1n.33.73.da10n.2d 46 64 da 5n b 10n.t6";
+        $message = "dc.79.dui.200n.2d.72.79.da1n.33.73.da10n.2d 46 64 da 5n b 10n.t6";
         //$message = "00.01.03.04.05.06.07.08.09.20.dd da300n,dp t3";
         //$message = "dc . 3312 b10n 2d 62 03 da10n . t1";
         //$message = "2d..da 14.54--94.14--54.94--18.58--98.18--58.98--20.02--58.85-1n 2d dav 07.95.41.76.1n da 22.41.1n 22.98.1n 22.76.1n 22.95.1n.t.2";
-        $message = "2d . 92 - 38 da3n . 115163.đav5n. 185807.đav5n . phu 1668 b20n. 2d . 57, 53da 8n .18.32 da2n . 15 55 95 da5n t3";
+        //$message = "2d . 92 - 38 da3n . 115163.đav5n. 185807.đav5n . phu 1668 b20n. 2d . 57, 53da 8n .18.32 da2n . 15 55 95 da5n t3";
         //$message = "2d 35-53-89-98 dav10n.";
         echo "<h3>".$message."</h3>";
         $message = $this->formatMessage($message);
@@ -104,16 +104,16 @@ class TestController extends Controller
         // TH chi co 1
         $betArr = [];
         //dd($channelArr);
-        echo "<br>";
+        //echo "<br>";
         if(count($channelArr) > 0){
             foreach($channelArr as $key => $value){           
                 $position =   isset($channelArr[$key+1]) ? $channelArr[$key+1] : count($tmpArr);
                 
                 $start = $key > 0 ? $value : 0;    
-                echo "start"."-",$start;
-                echo "<br>";
-                echo "position"."-",$position;
-                echo "<br>";       
+                //echo "start"."-",$start;
+                //echo "<br>";
+                //echo "position"."-",$position;
+                //echo "<br>";       
                 $betArr[] = array_slice($tmpArr, $start, $position-$start);
                 
             }
@@ -121,10 +121,11 @@ class TestController extends Controller
 
             $betArr[] = $tmpArr;
         }
+        //dd($betArr);
         foreach($betArr as $arr){
-            $this->parseBet($arr);
+            $betArrDetail[] = $this->parseBet($arr);
         }
-               
+        dd($betArrDetail);
     }
 
     function parseBet($arr){
@@ -144,14 +145,14 @@ class TestController extends Controller
             $position =   isset($betTypeKey[$key+1]) ? $betTypeKey[$key+1] : count($arr);
             
             $start = $key > 0 ? $value : 0;    
-            echo "start"."-",$start;
-            echo "<br>";
-            echo "position"."-",$position;
-            echo "<br>";       
+            //echo "start"."-",$start;
+            //echo "<br>";
+            //echo "position"."-",$position;
+            //echo "<br>";       
             $tmp2[] = array_slice($arr, $start, $position-$start);
             
         }
-        var_dump("<pre>",$tmp2);
+        return [$channel => $tmp2];
 
     }
     function formatMessage($message){    
